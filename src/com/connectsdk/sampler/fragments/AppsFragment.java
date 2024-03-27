@@ -45,12 +45,16 @@ public class AppsFragment extends BaseFragment {
     public Button myAppButton;
     public Button appStoreButton;
     public Button toastButton;
+    public Button netflixButton;
+    public Button youtubeButton;
 
     public ListView appListView;
     public AppAdapter adapter;
     LaunchSession runningAppSession;
     LaunchSession appStoreSession;
     LaunchSession myAppSession;
+    LaunchSession netflixSession;
+    LaunchSession youtubeSession;
     public TestResponseObject testResponse;
 
     ServiceSubscription<AppInfoListener> runningAppSubs;
@@ -72,10 +76,13 @@ public class AppsFragment extends BaseFragment {
         View rootView = inflater.inflate(
                 R.layout.fragment_apps, container, false);
 
-        browserButton = (Button) rootView.findViewById(R.id.browserButton);
+        // Todo OpenGoogle google app 인지 브라우저에서 웹페이지인지 동작 확인 후 수정
+        browserButton = (Button) rootView.findViewById(R.id.openGoogleButton);
         myAppButton = (Button) rootView.findViewById(R.id.myApp);
         appStoreButton = (Button) rootView.findViewById(R.id.appStoreButton);
         toastButton = (Button) rootView.findViewById(R.id.toastButton);
+        netflixButton = (Button) rootView.findViewById(R.id.netflixButton);
+        youtubeButton = (Button) rootView.findViewById(R.id.youtubeButton);
 
         appListView = (ListView) rootView.findViewById(R.id.appListView);
         adapter = new AppAdapter(getContext(), R.layout.app_item);
@@ -85,7 +92,9 @@ public class AppsFragment extends BaseFragment {
                 browserButton,
                 toastButton, 
                 myAppButton, 
-                appStoreButton
+                appStoreButton,
+                netflixButton,
+                youtubeButton
         };
 
         return rootView;
@@ -111,7 +120,7 @@ public class AppsFragment extends BaseFragment {
                     else {
                         browserButton.setSelected(true);
 
-                        getLauncher().launchBrowser("http://connectsdk.com/", new Launcher.AppLaunchListener() {
+                        getLauncher().launchBrowser("http://google.com/", new Launcher.AppLaunchListener() {
 
                             public void onSuccess(LaunchSession session) {
                                 setRunningAppInfo(session);
@@ -220,6 +229,14 @@ public class AppsFragment extends BaseFragment {
 
         appStoreButton.setEnabled(getTv().hasCapability(Launcher.AppStore_Params));
         appStoreButton.setOnClickListener(launchAppStore);
+
+        // Todo AppId check
+        netflixButton.setEnabled(getTv().hasCapability("Launcher.Netflix"));
+        netflixButton.setOnClickListener(netflixLaunch);
+
+        // Todo AppId check
+        youtubeButton.setEnabled(getTv().hasCapability("Launcher.Youtube"));
+        youtubeButton.setOnClickListener(youtubeLaunch);
     }
 
     public View.OnClickListener myAppLaunch = new View.OnClickListener() {
@@ -292,6 +309,62 @@ public class AppsFragment extends BaseFragment {
 
                         appStoreSession = object;
                         appStoreButton.setSelected(true);
+                    }
+                });
+            }
+        }
+    };
+
+    public View.OnClickListener netflixLaunch = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            if (netflixSession != null) {
+                netflixSession.close(null);
+
+                netflixSession = null;
+                netflixButton.setSelected(false);
+            } else {
+                // Todo AppId check
+                getLauncher().launchApp("Netflix", new AppLaunchListener() {
+
+                    @Override
+                    public void onError(ServiceCommandError error) {
+                        Log.d("LG", "Netflix failed: " + error);
+                    }
+
+                    @Override
+                    public void onSuccess(LaunchSession object) {
+                        netflixSession = object;
+                        netflixButton.setSelected(true);
+                    }
+                });
+            }
+        }
+    };
+
+    public View.OnClickListener youtubeLaunch = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            if (youtubeSession != null) {
+                youtubeSession.close(null);
+
+                youtubeSession = null;
+                youtubeButton.setSelected(false);
+            } else {
+                // Todo AppId check
+                getLauncher().launchApp("Youtube", new AppLaunchListener() {
+
+                    @Override
+                    public void onError(ServiceCommandError error) {
+                        Log.d("LG", "Youtube failed: " + error);
+                    }
+
+                    @Override
+                    public void onSuccess(LaunchSession object) {
+                        youtubeSession = object;
+                        youtubeButton.setSelected(true);
                     }
                 });
             }

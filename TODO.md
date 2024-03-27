@@ -1,0 +1,4 @@
+- [X] 명시된 Todo 기능 구현
+- [X] 예시 이미지에 맞춰 UI 및 기능 수정
+- [ ] AppsFragment에 google, netflix, youtube AppId 조회 및 수정 테스트
+- [ ] 나만의 페이지 하나 완성

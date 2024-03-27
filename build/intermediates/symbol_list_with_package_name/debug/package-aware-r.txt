@@ -1276,7 +1276,6 @@ id background_place_holder_image_view
 id beginning
 id blocking
 id bottom
-id browserButton
 id button
 id buttonPanel
 id button_0
@@ -1303,6 +1302,7 @@ id center_horizontal
 id center_vertical
 id channelDownButton
 id channelListView
+id channelUpButton
 id checkbox
 id checked
 id chronometer
@@ -1442,6 +1442,7 @@ id mr_volume_slider
 id multiply
 id muteToggle
 id myApp
+id netflixButton
 id never
 id nextButton
 id none
@@ -1461,6 +1462,7 @@ id numberButton8
 id numberButton9
 id off
 id on
+id openGoogleButton
 id openKeyboardButton
 id pager
 id parentPanel
@@ -1480,6 +1482,7 @@ id recycler_view
 id responseMessageTextView
 id rewindButton
 id right
+id rightButton
 id right_icon
 id right_side
 id screen
@@ -1579,6 +1582,7 @@ id volume_seek_bar
 id wide
 id withText
 id wrap_content
+id youtubeButton
 integer abc_config_activityDefaultDur
 integer abc_config_activityShortDur
 integer cancel_button_image_alpha
